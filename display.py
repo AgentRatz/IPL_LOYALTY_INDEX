@@ -4,7 +4,7 @@ from visualization import plot_loyalty_line_chart, plot_team_tenure_bar_chart, p
 from advanced_viz import plot_team_distribution_map
 import geopandas as gpd
 
-shapefile_path = gpd.read_file('/Users/csrbharadwaj/Desktop/Projects/IPL_LOYALITY_METER/india-states-2019-master/shapefile/india_states.shp')
+shapefile_path = gpd.read_file('india_states.shp')
 
 def display_player_profile(player_df, loyalty_df):
     if not player_df.empty:
