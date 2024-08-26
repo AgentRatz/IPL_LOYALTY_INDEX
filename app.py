@@ -6,7 +6,7 @@ st.set_page_config(layout="wide")
 
 # File paths
 background_image_url = "https://wallpapercave.com/wp/wp8994043.jpg"
-file_path = "/Users/csrbharadwaj/Desktop/Projects/IPL_LOYALITY_METER/data1.xlsx"
+file_path = "data1.xlsx"
 
 # Apply background image and transparency styles for Home page
 page_bg_img = f"""

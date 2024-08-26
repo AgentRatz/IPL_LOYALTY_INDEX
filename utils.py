@@ -10,43 +10,41 @@ def filter_and_display_players(file_path):
     # Load the Excel file into a DataFrame
     df = pd.read_excel(file_path, sheet_name="Sheet1", names=column_names, header=0)
 
-    # Create a search box
-    search_query = st.sidebar.text_input("Search for a player:")
+    # Create a container for the main content
+    with st.container():
+        # Create a search box
+        search_query = st.text_input("Search for a player:")
 
-    # Filter the DataFrame based on the search query
-    filtered_df = df[df['Player_Name_Full'].str.contains(search_query, case=False)]
+        # Filter the DataFrame based on the search query
+        filtered_df = df[df['Player_Name_Full'].str.contains(search_query, case=False)]
 
-    # Function to remove suffixes from player short names
-    def remove_suffix(name):
-        return re.sub(r'\s?\(.*\)', '', name)
+        # Function to remove suffixes from player short names
+        def remove_suffix(name):
+            return re.sub(r'\s?\(.*\)', '', name)
 
-    # Apply the function to remove suffixes from player short names
-    filtered_df['Player_Name_short'] = filtered_df['Player_Name_short'].apply(remove_suffix)
+        # Apply the function to remove suffixes from player short names
+        filtered_df['Player_Name_short'] = filtered_df['Player_Name_short'].apply(remove_suffix)
 
-    # Group by profile link and filter only those profiles which match the given search query
-    grouped_df = filtered_df.groupby('Profile_Link').filter(lambda x: len(x) > 1)
+        # Group by profile link and filter only those profiles which match the given search query
+        grouped_df = filtered_df.groupby('Profile_Link').filter(lambda x: len(x) > 1)
 
-    # Get unique players based on profile link
-    unique_players = grouped_df.groupby('Profile_Link').first()
+        # Get unique players based on profile link
+        unique_players = grouped_df.groupby('Profile_Link').first()
 
-    # Display a selection dropdown for choosing the player
-    selected_player = st.sidebar.selectbox("Select a player:", options=unique_players['Player_Name_Full'].tolist())
+        # Display a selection dropdown for choosing the player
+        selected_player = st.selectbox("Select a player:", options=unique_players['Player_Name_Full'].tolist())
 
-    # Filter the DataFrame based on the selected player
-    selected_player_df = grouped_df[grouped_df['Player_Name_Full'] == selected_player]
+        # Filter the DataFrame based on the selected player
+        selected_player_df = grouped_df[grouped_df['Player_Name_Full'] == selected_player]
 
-    # Calculate loyalty
-    loyalty_df = calculate_loyalty(selected_player_df)
+        # Calculate loyalty
+        loyalty_df = calculate_loyalty(selected_player_df)
 
-    # Display the filtered DataFrame and loyalty percentage
-    if not selected_player_df.empty:
-        display_player_profile(selected_player_df, loyalty_df)
-    else:
-        st.write("No matching players found.")
-
-import pandas as pd
-
-import pandas as pd
+        # Display the filtered DataFrame and loyalty percentage
+        if not selected_player_df.empty:
+            display_player_profile(selected_player_df, loyalty_df)
+        else:
+            st.write("No matching players found.")
 
 def calculate_loyalty(player_df):
     # Sort the DataFrame by Year in ascending order
@@ -91,4 +89,3 @@ def calculate_loyalty(player_df):
     loyalty_df['Team'] = player_df['TEAM_CODE'].iloc[0]  # Add team column
 
     return loyalty_df
-
