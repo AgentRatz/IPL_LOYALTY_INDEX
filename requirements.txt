@@ -5,3 +5,4 @@ geopandas
 openpyxl
 matplotlib
 pyogrio
+numpy
