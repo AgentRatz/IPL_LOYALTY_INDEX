@@ -54,7 +54,7 @@ def interpolate_color(color1, color2, t):
 
 def plot_team_distribution_map(player_df):
     # Load the shapefile
-    shapefile_path = '/workspaces/IPL_LOYALTY_INDEX/india_states.shp'
+    shapefile_path = 'india_states.shp'
     india_map = gpd.read_file(shapefile_path)
     
     # Map teams to states
