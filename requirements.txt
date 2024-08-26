@@ -4,3 +4,4 @@ plotly
 geopandas
 openpyxl
 matplotlib
+pyogrio
