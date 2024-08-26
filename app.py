@@ -1,3 +1,5 @@
+pip install plotly
+
 import streamlit as st
 from utils import filter_and_display_players
 
